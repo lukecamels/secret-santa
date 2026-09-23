@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Secret Santa</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127873;</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <section id="login">
+    <h1>Secret Santa</h1>
+    <p class="sub" id="event-name">Enter your access token to see who you're buying for.</p>
+
+    <div class="card">
+      <form id="login-form" autocomplete="off">
+        <label for="token">Access token</label>
+        <input id="token" class="token-input" type="text" inputmode="latin"
+               autocapitalize="characters" autocomplete="off" spellcheck="false"
+               placeholder="XXXXX-XXXXX-XXXXX-XXXXX" aria-describedby="token-hint">
+        <p class="hint" id="token-hint">Dashes, spaces and capitals don't matter.</p>
+        <div class="actions">
+          <button type="submit" id="unlock" class="block">Unlock</button>
+        </div>
+      </form>
+      <div class="msg error" id="login-error" role="alert"></div>
+    </div>
+
+    <p class="footer">Nothing on this site identifies anyone until a valid token unlocks it.</p>
+  </section>
+
+  <section id="app" hidden>
+    <div class="topbar">
+      <div>
+        <h1 id="greeting">Hello</h1>
+        <p class="sub" id="event-label" style="margin:0"></p>
+      </div>
+      <button class="secondary" id="logout" type="button">Sign out</button>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-giftee" aria-selected="true" aria-controls="panel-giftee" type="button">Who I'm buying for</button>
+      <button role="tab" id="tab-mine" aria-selected="false" aria-controls="panel-mine" type="button">My wishlist &amp; messages</button>
+    </div>
+
+    <div class="msg warn" id="api-warning"></div>
+
+    <!-- ---- giftee ---- -->
+    <div id="panel-giftee" role="tabpanel" aria-labelledby="tab-giftee">
+      <div class="card">
+        <h3>You are buying a gift for</h3>
+        <p class="giftee-name" id="giftee-name">&hellip;</p>
+        <p class="hint">They don't know it's you, and they can't find out from this site.</p>
+      </div>
+
+      <div class="card">
+        <h2>Their wishlist</h2>
+        <ul class="wishlist" id="giftee-wishlist"></ul>
+        <p class="empty" id="giftee-wishlist-empty" hidden>They haven't added anything yet.</p>
+        <p class="hint" id="giftee-note" hidden></p>
+      </div>
+
+      <div class="card">
+        <h2>Ask them something</h2>
+        <p class="hint" style="margin-top:0">
+          They'll see this as a message from their Secret Santa &mdash; no name attached.
+          Try not to give yourself away.
+        </p>
+        <div class="thread" id="giftee-thread"></div>
+        <p class="empty" id="giftee-thread-empty">No messages yet.</p>
+        <label for="giftee-compose" class="sr-only" style="margin-top:12px">Your message</label>
+        <textarea id="giftee-compose" placeholder="e.g. What size do you take?"></textarea>
+        <div class="actions">
+          <button type="button" id="giftee-send">Send anonymously</button>
+          <button type="button" class="secondary" id="giftee-refresh">Refresh</button>
+        </div>
+        <div class="msg" id="giftee-status" role="status"></div>
+      </div>
+    </div>
+
+    <!-- ---- my own mailbox ---- -->
+    <div id="panel-mine" role="tabpanel" aria-labelledby="tab-mine" hidden>
+      <div class="card">
+        <h2>My wishlist</h2>
+        <p class="hint" style="margin-top:0">
+          One idea per line. Only your Secret Santa can read this &mdash; not the site, not anyone else.
+        </p>
+        <label for="wishlist-items">Ideas</label>
+        <textarea id="wishlist-items" rows="8" placeholder="A nice pair of wool socks&#10;That book about sourdough&#10;Anything for the garden"></textarea>
+        <label for="wishlist-note" style="margin-top:14px">Anything else they should know</label>
+        <textarea id="wishlist-note" rows="3" placeholder="Sizes, allergies, things I already have..."></textarea>
+        <div class="actions">
+          <button type="button" id="wishlist-save">Save wishlist</button>
+        </div>
+        <div class="msg" id="wishlist-status" role="status"></div>
+      </div>
+
+      <div class="card">
+        <h2>Messages from your Secret Santa</h2>
+        <p class="hint" style="margin-top:0">You'll never be told who they are.</p>
+        <div class="thread" id="mine-thread"></div>
+        <p class="empty" id="mine-thread-empty">No messages yet.</p>
+        <label for="mine-compose" style="margin-top:12px">Reply</label>
+        <textarea id="mine-compose" placeholder="Write back to your Secret Santa..."></textarea>
+        <div class="actions">
+          <button type="button" id="mine-send">Send reply</button>
+          <button type="button" class="secondary" id="mine-refresh">Refresh</button>
+        </div>
+        <div class="msg" id="mine-status" role="status"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="assets/js/crypto.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

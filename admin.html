@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Secret Santa &mdash; setup</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128736;</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="wrap wrap-wide">
+
+  <div class="no-print">
+    <h1>Secret Santa &mdash; setup</h1>
+    <p class="sub">
+      Everything here happens in this browser tab. Nothing is uploaded, and the finished
+      file contains no names in readable form.
+    </p>
+
+    <div class="msg warn">
+      <strong>Run the draw once.</strong> Re-running it produces new tokens and a completely
+      new set of assignments, and any wishlists or messages already written become unreadable.
+    </div>
+
+    <!-- 1. Event -->
+    <div class="card">
+      <h2>1. The basics</h2>
+      <label for="event">Event name</label>
+      <input id="event" type="text" placeholder="Family Secret Santa 2026">
+
+      <label for="api" style="margin-top:14px">Mailbox API address</label>
+      <input id="api" type="url" placeholder="https://secret-santa-api.your-name.workers.dev">
+      <p class="hint">
+        The Cloudflare Worker URL from step 2 of the README. Leave it blank to run without
+        wishlists or messaging &mdash; assignments only.
+      </p>
+    </div>
+
+    <!-- 2. People -->
+    <div class="card">
+      <h2>2. Who's taking part</h2>
+      <form id="add-person-form" autocomplete="off">
+        <div class="row">
+          <div>
+            <label for="person">Name</label>
+            <input id="person" type="text" placeholder="First name is plenty">
+          </div>
+          <button type="submit">Add</button>
+        </div>
+      </form>
+      <p class="hint">Or paste a whole list at once &mdash; one name per line &mdash; into the box above.</p>
+      <ul class="chips" id="people"></ul>
+      <p class="empty" id="people-empty">Nobody added yet.</p>
+    </div>
+
+    <!-- 3. Exclusions -->
+    <div class="card">
+      <h2>3. Who mustn't get each other</h2>
+      <p class="hint" style="margin-top:0">
+        Each link works both ways: neither person will be given the other. Add one link per
+        couple, or several links to keep a whole household apart.
+      </p>
+      <div class="row">
+        <div>
+          <label for="excl-a">Person</label>
+          <select id="excl-a"></select>
+        </div>
+        <div>
+          <label for="excl-b">and</label>
+          <select id="excl-b"></select>
+        </div>
+        <button type="button" id="add-exclusion">Link</button>
+      </div>
+      <ul class="chips" id="exclusions"></ul>
+      <p class="empty" id="exclusions-empty">No links yet.</p>
+    </div>
+
+    <!-- 4. Draw -->
+    <div class="card">
+      <h2>4. Draw</h2>
+      <label style="display:flex; gap:8px; align-items:flex-start; font-weight:500">
+        <input type="checkbox" id="single-loop" style="width:auto; margin-top:4px" checked>
+        <span>
+          One single chain &mdash; everyone gives to the next person around a loop, so no two
+          people are ever each other's Santa.
+        </span>
+      </label>
+      <div class="actions">
+        <button type="button" id="draw">Run the draw</button>
+      </div>
+      <div class="msg" id="draw-status" role="status"></div>
+    </div>
+  </div>
+
+  <!-- 5. Results -->
+  <section id="results" hidden>
+    <div class="card no-print">
+      <h2>5. Publish</h2>
+      <p>
+        Save this file as <code>data/santa.json</code> in your repository, replacing what's
+        already there, then commit and push.
+      </p>
+      <div class="actions">
+        <button type="button" id="download">Download santa.json</button>
+        <button type="button" class="secondary" id="copy-json">Copy to clipboard</button>
+      </div>
+      <div class="msg" id="publish-status" role="status"></div>
+      <pre class="output" id="json-preview"></pre>
+    </div>
+
+    <div class="card">
+      <h2 class="no-print">6. Hand these out</h2>
+      <div class="msg warn no-print">
+        These tokens are shown once. Print or copy them now &mdash; they cannot be recovered
+        from the published file, and closing this tab loses them for good.
+      </div>
+      <div class="actions no-print">
+        <button type="button" class="secondary" id="print">Print the slips</button>
+        <button type="button" class="secondary" id="copy-tokens">Copy as a list</button>
+      </div>
+      <div class="slips" id="slips"></div>
+    </div>
+  </section>
+
+</div>
+
+<script src="assets/js/crypto.js"></script>
+<script src="assets/js/draw.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

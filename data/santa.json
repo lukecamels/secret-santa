@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "event": "Secret Santa",
+  "createdAt": null,
+  "api": "",
+  "salt": "",
+  "kdf": { "name": "PBKDF2", "hash": "SHA-256", "iterations": 310000 },
+  "records": {},
+  "mailboxes": {}
+}

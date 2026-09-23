@@ -1,0 +1,8 @@
+node_modules/
+.wrangler/
+.dev.vars
+*.log
+
+# Never let a token sheet get committed by accident.
+tokens*.txt
+tokens*.csv

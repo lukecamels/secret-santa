@@ -1,0 +1,29 @@
+name = "secret-santa-api"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+
+# Created with:  npx wrangler kv namespace create SANTA_KV
+# Paste the id it prints here.
+[[kv_namespaces]]
+binding = "SANTA_KV"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+[vars]
+# Where the Worker reads the mailbox list from. Must be your published site.
+DATA_URL = "https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPO/data/santa.json"
+
+# Only these origins may call the API. Comma-separated.
+ALLOWED_ORIGINS = "https://YOUR-GITHUB-USERNAME.github.io"
+
+# Don't send more than one nudge per mailbox within this many minutes.
+NOTIFY_MIN_MINUTES = "360"
+
+# Include a 4-character mailbox reference in the notification. Leave as "false"
+# to keep every notification completely indistinguishable from every other.
+NOTIFY_INCLUDE_REF = "false"
+
+# Secrets - set with `npx wrangler secret put NAME`, never in this file:
+#   NOTIFY_EMAIL        your email address, for the digest
+#   RESEND_API_KEY      from resend.com, if you want email
+#   NOTIFY_FROM         optional, e.g. "Secret Santa <santa@yourdomain.com>"
+#   NOTIFY_WEBHOOK_URL  optional, a Discord/Slack/ntfy webhook instead of email
