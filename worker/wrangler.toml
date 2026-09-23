@@ -10,10 +10,10 @@ id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
 
 [vars]
 # Where the Worker reads the mailbox list from. Must be your published site.
-DATA_URL = "https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPO/data/santa.json"
+DATA_URL = "https://lukecamels.github.io/secret-santa/data/santa.json"
 
 # Only these origins may call the API. Comma-separated.
-ALLOWED_ORIGINS = "https://YOUR-GITHUB-USERNAME.github.io"
+ALLOWED_ORIGINS = "https://lukecamels.github.io"
 
 # Don't send more than one nudge per mailbox within this many minutes.
 NOTIFY_MIN_MINUTES = "360"
