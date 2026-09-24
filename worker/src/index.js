@@ -215,7 +215,7 @@ async function notify(env, mailboxId) {
     }
 
     if (env.RESEND_API_KEY && env.NOTIFY_EMAIL) {
-      await fetch('https://api.resend.com/emails', {
+      const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           authorization: `Bearer ${env.RESEND_API_KEY}`,
@@ -228,8 +228,18 @@ async function notify(env, mailboxId) {
           text
         })
       });
+
+      // A rejected key or an unverified recipient fails quietly at the API, and
+      // a notification that never arrives looks identical to no activity. Say so
+      // in the log so `wrangler tail` can explain it.
+      if (!res.ok) {
+        console.error('notify: Resend rejected the send', res.status, await res.text());
+      }
+    } else if (!env.RESEND_API_KEY) {
+      console.error('notify: RESEND_API_KEY is not set, so no email was sent');
     }
   } catch (err) {
     // Notifications are a nicety; never let one fail a write.
+    console.error('notify: failed', err && err.message);
   }
 }
