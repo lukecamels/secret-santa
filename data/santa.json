@@ -1,28 +1,10 @@
 {
   "version": 1,
-  "event": "SMOKE TEST - delete me",
-  "createdAt": "2026-09-24T02:48:12.249Z",
-  "api": "https://secret-santa-api.secret-santa-api.workers.dev",
-  "salt": "15W_ZbLp1fvBN1VMXjttjw",
-  "kdf": {
-    "name": "PBKDF2",
-    "hash": "SHA-256",
-    "iterations": 310000
-  },
-  "records": {
-    "ycix_jj7mPqaKEqzEeZAcQ": "U-8mHjMaNPuT66d9ZYYVPh3kfKpHF-gWlxgg5ISM_9bBUeTRWDVgXsHWE8mvnxvwkEipOBcoLP1uU45qDFsjzlyqjGUyrVJe2duKdkNPsq4L3_qwZ137ObaqSHQ4uKIcxHeLilnWWrnxZSPe0OdzfNKbGeF_KvyRSCap5YDnHIWCZzewoEsqhy9t7cdZjBYRg8oqXPPhpVfq_jmyLeY1cX72IhK-EccJoTXa6Lic7Jrsedm4eQ6UONY-ef7Fw_JZxU29x-5LLePby9wUcdDFqyNwhOAtSnykBU8yWSVUeqWNE35qOfdd_1_JxYo0QB6-M9LiVSJ4ZCoX_omEcEc5lzV1EBC3ebOFWkHJMFVFw4YsvNVbV0v1PnjHidadsQpS9b0k0igpmtOAZ-68Oud9D7LIpA2Jr8nF-GtnkU8GJ_pIC599kGdmw_s9N9W2x52yM7nVo1tJUMGbFGyQl32oThaaLCPXHL7tMRVvoP4uw2CwJUCK2hoKAYwTWse5uZq-wD55BdPg89Xf7TqL8rRmeETj",
-    "xqxafOqGwFvsKAbBnBiTUg": "rKxx6SgCD-HmF7pAeJFMbRGZkaShJWvUl473vlJn7autKpjqwtqsBYkUWo-EefqQ8qMH8IZ786sKxPVMDaFXvxlNfcm_1XqCbyIHpILSDhaEmZwxQvrp8hR8m1XHVYMzfHUyhO6tYw72OM6t0IO3Ug7NC1cIV59bklAfy6_TsmDMa_B9d8-QzpXOhxxyl4rcQr-awAa4wA5l8twLc33IICyEk4GfgDF9Qon1TmkUKraoHM5UJMmGcbZyf8sFpyb7lsoEcGW7NHAzYjOCWjD2JPpifxsh0gJplily-DKAufxec5gIh78ndAeLv266ylhuLSgD1pc9wtGrYutTC9_kvHOGHMJwotlXhPQzmy6dNLMK1O0Lxky0FSbSwuHHinV769xSgjMxQCFXxYhOVRFxIo0fh2meO-hZLGESjOBF3Ffxr5t1skfW8IpuCjHcQXDZuCzu6y8ve3fai-rjV9Hwz5wmaCtPR6UXEiv9chchImbEY7xJfGqHJItAXdlaUj0KFDEWqY4Lz6HuNqY0WKPW_yAskg",
-    "ztZk9dm6l8sLuEvzs5Klxw": "f2HD9HCftxQPWTToMZFvZr5EFDdHT6JyWahNh6b_L0LEXfDtnxo0ozZwwOifPloRIHtQE6ZmG5sGyoP62KfN9RvWUu3tSZp47YNQ01ls1PvMdWtd86JAHt7Tx7VTwTTI9noaU2srwI7X8PifaakVcfKiJkABsp_b2gbuLY6F67Cb7a2lxQd2XJKwJaiV8qohH5qEeDkJGAtca0OZzp5b2_DEyx0TGtXyAlLOW799Dfi_wV4sw3AXag028e_FIde1kaTTMjOo855b5b47yCciDPTKyTHprQNENLDT9bFJS7PIew74mQxV19fgPf3N0iRN_FO3TBfwM7bLygwtDnmwO6byiz_xjAnFLtCR-cFnPB1CXD0k2hV0BBoh_WAxl24E4nuh2eQ50nW9b9-BP4_3CNgSxU6l1omfp_F9QiBDt2xgjUZzADYN3mFitdAe2pbbN0YoLyPVQafMcB6mS5fGcNsAgc3_g-gzaYp6BvFuVoWbXe6yyBm1_H5gfUdvhLeky2VtL0tpsgwsjWj1Dhmc788",
-    "bDSwDkzN7FXfkGST1f9htw": "xSVvL8yLz1u_BJlXhklUepRRkgFP6jIZjI-80XiGTWi2JZXVsFMSTaCgIW6enDt6N-sn20EVW1V84eeuEhAsEjvx5XPRJHgZZDcL65XEC0qRLQk4lacGRKxX7rReSNJbfB4zzf53xrQhDIpaQpBwVKZzOi9hk8_fBpR1QCsiuu_W-h9Q5Jct73TvUMvikRymTZ2kH9ynL9FvnY5jzGEnbvf7b-gY2fBYkOPbUoiKiNF3HjkE3cuVJLQf9sgybRRM0Eb-pVsyxAodDgr7cubDe-Gx3ifOQ_BypbcIZ32h1u17l5VU4pG1mSVsdHKMMPsSoYm888pHPnKvVqrk3yQ-gKKgflhIgbLizD5-irdBU5oTvas6Sbk_TBPaqEUkxYe2SKrt8EZpOISu7awBzowvjb2DznZxpaVevC9cEUruTiOIMdLS_mjQe42UAewdo45kBNnSXPB6sbSunoZcyy0huBW9-hzMJ5WtNyGXh4tx9Azvb77aDjN960h2H4lkYcYlt724wLiJ5jr-4MHGo1DQCpzm0A",
-    "tSd_KG7fZ_V6Tm6fotrYSQ": "0EFVpuUbAe5RYnHjsS1tkuVf8jrdNp3lmgyxY7n4mf16q1eumgfSsVC2kHmomLnWNyRVJcwnw00coQTSJpJkzwdw2VaXSh1rNsX4bBGOzZ0iesIRYx39wv1IP7E8QLxpmQVdmntAAfFyUZAz_eA4abFScgrHFXFGtxbdiH-hN04NQ00KHDRVFkTNASOD9lmttK13xNX0NFkSigWmR0IHXRHo2dUrM8-Tewk3T1Pdb1z8kgoj6Q4-oo2RKNMFTJfd0rSwiVzqGmmagEVYiUC2eVnOnBxjZI6JUZmRQ2aotSD95jAOW6qDBZea68d0j77VqCYgMJQ40-pplDKvn1hrEIaRUMdVltEhnnKB_6JFV3_lQUU9N0gszWuYsiN4ZSXR_LsVuuDDSL29nM-lRuimcUH-lgrRZdM7wHq-jI4y5QIwMUvh0Hlm8TsDkMvh1-2WlB7bPjTVmoFpbnIhizM9tbavL73J_szWa0xC4nXR5UUMHQhn5Wpexq_LiJd5tbotpJsdqEdWPtYudotseJm0oQ",
-    "2SXmJ7-Io2xq8UpFqDHXiQ": "bdEE6R2BDMRsvqLIpowd5xKGeIcficbmFWtP25ZcFstzdOx9OF9tWC60EDVwaQheQF2PFKwN3Q_nrPRYbDChOGkgzbX9cFOOxMy6fFjoGckcZY-vLXvvRKRdcV9DgyCX5bn1FYPx7hPBFFIn1XrQvVhvtZRChkpKx3LMwKIJ3b35Mu6wfOJSlNJ0owqO9THNsw1bTxCZ7sEHS3rM2b7dyslA451w4QoKS9WgjF4JrfDrxO7dPQsDCkwX8k7ZssbatSealKLHMVsIhweXGPW0EMAnj7P0RdfKG1IJu_PDbur2-Uzj5WZR1cBi3GKTvKLa3-x4WABqsrkVTURPi4GsmyvqTp6FHm0kf44ApAUjazBbIGg6A2orHQmjjkCIS1ORi9kUBRt4rxPH8YXnwKOpxYanFO7OTu-RFD5n6W_7yl1C0Az1c5yV9bKYYdsHJSSAVz7QlV4zIxhqCSjCB5ine-Ov3GbJzUdnDDHUKFo8zJSvu_7LxIsQP4XJ1uq4M3YndvX-4J5LJ20SBkkHLtpoBcNQBA"
-  },
-  "mailboxes": {
-    "x-goQF04P0zWgip4pHlmXg": "e-JmVDjW_ydUuGpc1DSpzMvJR9Nq4QRXI1UZiwAMxQ4",
-    "MJLT4KwueuFAlBP_bgaq5w": "Di8StssQHLOceFhPuS-6wu9SfJ-XLJdRxEOr3vgf_EM",
-    "PCN5KYquIaSgqwvdeGm_1Q": "3SRcOxYcD8CkiZtJjFWLdA4NfcfeycM9KCXJhi8FbHk",
-    "oT0EG6EvzYoOg5IfIRpmrQ": "rsWrQRWqvdW12BtuqCNkS7mpxOjZtJ5kKbxqzyphB_Q",
-    "9ENUmimMFGkMtYLFTGGrUg": "RjJMAq6xJn6PPfSOeRBqgGOHk8qhnseIWLLkMwa5PKI",
-    "vyqiYJjuSAYY93YsUxeUaw": "eGlRlV568emVHCCgQU-I0rPaMAm-J8U_1_zneWYp2q4"
-  }
+  "event": "Secret Santa",
+  "createdAt": null,
+  "api": "",
+  "salt": "",
+  "kdf": { "name": "PBKDF2", "hash": "SHA-256", "iterations": 310000 },
+  "records": {},
+  "mailboxes": {}
 }
