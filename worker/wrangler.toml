@@ -6,7 +6,7 @@ compatibility_date = "2025-09-01"
 # Paste the id it prints here.
 [[kv_namespaces]]
 binding = "SANTA_KV"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id = "abf8f5eae26d49b4beb763033ae58de9"
 
 [vars]
 # Where the Worker reads the mailbox list from. Must be your published site.

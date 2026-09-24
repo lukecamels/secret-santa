@@ -1,5 +1,20 @@
 # Secret Santa
 
+**This deployment**
+
+| | |
+| --- | --- |
+| Site | https://lukecamels.github.io/secret-santa/ |
+| Run the draw | https://lukecamels.github.io/secret-santa/admin.html |
+| API | https://secret-santa-api.secret-santa-api.workers.dev |
+
+The API address is pre-filled on the setup page, so there's nothing to paste.
+The doubled name is not a typo: Cloudflare took the account-wide `workers.dev`
+subdomain from the first Worker deployed to it, and the Worker is also called
+`secret-santa-api`. Changing it is cosmetic only, under Workers &rarr; Subdomain.
+
+---
+
 A public website that runs a family Secret Santa without ever revealing anything
 to the public — or to the people running it. Names, assignments, wishlists and
 messages are all encrypted in the browser. The published files and the API server
