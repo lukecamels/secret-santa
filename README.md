@@ -145,10 +145,33 @@ Then, without closing the tab:
 
 - **Download `santa.json`**, drop it into `data/` in your repo replacing the
   placeholder, commit and push.
-- **Print the slips** (or copy the list). This is the only time the tokens are
-  ever shown. They can't be recovered from the published file.
+- **Copy the links** (or the codes, or print the slips). This is the only time
+  they are ever shown. They can't be recovered from the published file.
 
-Hand out the slips. Everyone goes to the site, types their token, and they're in.
+Send each person their own link and they're in on one tap.
+
+Allow a couple of minutes between pushing `santa.json` and the first sign-in:
+GitHub's CDN takes about thirty seconds to serve the new file and the Worker
+caches the mailbox list for sixty seconds on top of that. A token that doesn't
+work straight away usually just needs another minute.
+
+### Sign-in links
+
+A link looks like `https://…/secret-santa/#t=XXXXX-XXXXX-XXXXX-XXXXX`.
+
+The token sits after the `#`, which matters: browsers never send the fragment to
+the server. It stays out of GitHub's request logs, out of `Referer` headers, and
+out of the preview fetch a messaging app makes when it renders the link. The page
+wipes it from the address bar the moment it reads it, so it doesn't linger on
+screen or in a screenshot.
+
+A link is exactly as powerful as the code inside it &mdash; it *is* the code. Send
+each person only their own, the same way you'd hand over a key. If the page is
+already open, tapping a link still works; it switches accounts and cleans the
+address bar just like a fresh visit.
+
+Already ran the draw and only kept the codes? The bottom of the setup page turns
+a pasted list of codes into links without re-drawing anything.
 
 ---
 

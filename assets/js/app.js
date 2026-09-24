@@ -42,6 +42,28 @@
     if (el.classList.contains('error')) setMsg(el, '', '');
   }
 
+  // A sign-in link carries the token in the fragment: .../#t=XXXXX-XXXXX-...
+  // Fragments are never sent to the server, so the token stays out of GitHub's
+  // logs, out of Referer headers, and out of any link-preview fetch a messaging
+  // app makes. It is wiped from the address bar the instant it is read, so it
+  // does not linger on screen or in a screenshot.
+  function takeTokenFromUrl() {
+    var match = (location.hash || '').match(/[#&]t=([^&]*)/);
+    if (!match) return null;
+
+    try {
+      history.replaceState(null, '', location.pathname + location.search);
+    } catch (e) {
+      location.hash = '';
+    }
+
+    try {
+      return decodeURIComponent(match[1]);
+    } catch (e) {
+      return match[1];
+    }
+  }
+
   function when(ts) {
     var d = new Date(ts);
     if (isNaN(d.getTime())) return '';
@@ -51,6 +73,10 @@
   /* ---- boot ------------------------------------------------------------ */
 
   function boot() {
+    // Read this before the fetch resolves, so the token is out of the address
+    // bar immediately rather than after a network round trip.
+    var linkToken = takeTokenFromUrl();
+
     fetch(DATA_URL, { cache: 'no-store' })
       .then(function (r) {
         if (!r.ok) throw new Error('missing');
@@ -68,6 +94,13 @@
           $('unlock').disabled = true;
           return;
         }
+        // A link beats a leftover session: if someone opens their own link on a
+        // shared device, they should land in their own account, not whoever
+        // used it last. A bad link reports the error rather than failing quietly.
+        if (linkToken) {
+          unlock(linkToken, false);
+          return;
+        }
         var saved = session('get');
         if (saved) unlock(saved, true);
       })
@@ -81,6 +114,15 @@
     });
 
     $('logout').addEventListener('click', signOut);
+
+    // Opening a sign-in link while this page is already loaded changes only the
+    // fragment, so the browser does a same-document navigation and boot() never
+    // runs again. Without this the tap appears to do nothing and the token is
+    // left sitting in the address bar.
+    window.addEventListener('hashchange', function () {
+      var token = takeTokenFromUrl();
+      if (token) unlock(token, false);
+    });
 
     $('tab-giftee').addEventListener('click', function () { selectTab('giftee'); });
     $('tab-mine').addEventListener('click', function () { selectTab('mine'); });
@@ -129,9 +171,15 @@
         renderApp();
       })
       .catch(function (err) {
-        session('clear');
+        // A failed attempt must not leave someone looking at an account they
+        // are no longer signed in to - drop all the way back to the login card.
+        var wasSignedIn = !!state.record;
+        signOut();
+
         if (err && err.message === 'unknown_token') {
-          setMsg($('login-error'), 'That token is not recognised. Check for typos, or ask whoever set this up.', 'error');
+          setMsg($('login-error'), wasSignedIn
+            ? 'That link was not recognised, so you have been signed out. Sign in again below.'
+            : 'That token is not recognised. Check for typos, or ask whoever set this up.', 'error');
         } else {
           setMsg($('login-error'), 'Could not unlock with that token.', 'error');
         }
@@ -157,6 +205,11 @@
   }
 
   function renderApp() {
+    // Signing in again without signing out first (a second link on the same
+    // page) would otherwise stack up refresh timers.
+    if (state.refreshTimer) clearInterval(state.refreshTimer);
+    state.refreshTimer = null;
+
     show($('login'), false);
     show($('app'), true);
     selectTab('giftee');

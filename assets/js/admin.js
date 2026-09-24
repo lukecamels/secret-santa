@@ -24,6 +24,16 @@
     el.className = 'msg' + (text && kind ? ' ' + kind : '');
   }
 
+  /* ---- sign-in links --------------------------------------------------- */
+
+  // The token rides in the fragment, which browsers never send to the server.
+  function signInLink(token) {
+    var base = $('site').value.trim();
+    if (!base) return null;
+    if (!/^https?:\/\//i.test(base)) base = 'https://' + base;
+    return base.replace(/[#?].*$/, '').replace(/\/*$/, '/') + '#t=' + encodeURIComponent(token);
+  }
+
   function findPerson(uid) {
     return people.filter(function (p) { return String(p.uid) === String(uid); })[0];
   }
@@ -253,8 +263,18 @@
 
       var note = document.createElement('div');
       note.className = 'hint';
-      note.style.margin = '2px 0 0';
-      note.textContent = 'Your Secret Santa access token';
+      note.style.margin = '2px 0 6px';
+      note.textContent = 'Tap your link to sign in';
+
+      var link = document.createElement('div');
+      link.className = 'tok';
+      link.style.fontSize = '0.8rem';
+      link.textContent = signInLink(entry.token) || '(set the site address above)';
+
+      var orNote = document.createElement('div');
+      orNote.className = 'hint';
+      orNote.style.margin = '8px 0 0';
+      orNote.textContent = 'or type this code:';
 
       var tok = document.createElement('div');
       tok.className = 'tok';
@@ -262,6 +282,8 @@
 
       div.appendChild(title);
       div.appendChild(note);
+      div.appendChild(link);
+      div.appendChild(orNote);
       div.appendChild(tok);
       slips.appendChild(div);
     });
@@ -288,6 +310,43 @@
       navigator.clipboard.writeText(text).then(done, failed);
     } else {
       failed();
+    }
+  }
+
+  /* ---- rebuilding links for a draw that already happened --------------- */
+
+  function buildLinksFromCodes() {
+    var lines = $('relink-input').value.split('\n');
+    var out = [];
+    var skipped = 0;
+
+    lines.forEach(function (line) {
+      if (!line.trim()) return;
+
+      // "Name: CODE", "Name - CODE" or a bare code. Split on the LAST separator
+      // so names containing one still work.
+      var name = '';
+      var code = line.trim();
+      var sep = Math.max(code.lastIndexOf(':'), code.lastIndexOf('\u2014'), code.lastIndexOf(' - '));
+      if (sep > -1) {
+        name = code.slice(0, sep).replace(/[\s:\u2014-]+$/, '').trim();
+        code = code.slice(sep + 1).trim();
+      }
+
+      var normalised = SSCrypto.normalizeToken(code);
+      if (normalised.length < 8) { skipped++; return; }
+
+      out.push((name ? name + ': ' : '') + signInLink(SSCrypto.formatToken(normalised)));
+    });
+
+    $('relink-output').textContent = out.join('\n');
+    if (out.length === 0) {
+      setMsg($('relink-status'), 'No codes found. One per line, e.g. "Ada: 9QM4C-KAK7S-1A0MK-SEXGB".', 'error');
+    } else {
+      setMsg($('relink-status'),
+        'Built ' + out.length + ' link' + (out.length === 1 ? '' : 's') +
+        (skipped ? ' (' + skipped + ' line' + (skipped === 1 ? '' : 's') + ' skipped - too short to be a code)' : '') + '.',
+        skipped ? 'warn' : 'ok');
     }
   }
 
@@ -332,7 +391,21 @@
 
     $('copy-tokens').addEventListener('click', function () {
       var text = lastResult.tokens.map(function (t) { return t.name + ': ' + t.token; }).join('\n');
-      copy(text, $('publish-status'), 'Tokens copied. Paste them somewhere safe before closing this tab.');
+      copy(text, $('publish-status'), 'Codes copied. Paste them somewhere safe before closing this tab.');
+    });
+
+    $('copy-links').addEventListener('click', function () {
+      var text = lastResult.tokens.map(function (t) {
+        return t.name + ': ' + signInLink(t.token);
+      }).join('\n');
+      copy(text, $('publish-status'), 'Links copied. Send each person only their own.');
+    });
+
+    $('relink').addEventListener('click', buildLinksFromCodes);
+    $('relink-copy').addEventListener('click', function () {
+      var text = $('relink-output').textContent;
+      if (!text) { setMsg($('relink-status'), 'Build the links first.', 'error'); return; }
+      copy(text, $('relink-status'), 'Copied. Send each person only their own.');
     });
 
     window.addEventListener('beforeunload', function (e) {

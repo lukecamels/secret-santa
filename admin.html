@@ -29,6 +29,11 @@
       <label for="event">Event name</label>
       <input id="event" type="text" placeholder="Family Secret Santa 2026">
 
+      <label for="site" style="margin-top:14px">Site address</label>
+      <input id="site" type="url" placeholder="https://your-name.github.io/secret-santa/"
+             value="https://lukecamels.github.io/secret-santa/">
+      <p class="hint">Used to build each person's sign-in link.</p>
+
       <label for="api" style="margin-top:14px">Mailbox API address</label>
       <input id="api" type="url" placeholder="https://secret-santa-api.your-name.workers.dev"
              value="https://secret-santa-api.secret-santa-api.workers.dev">
@@ -113,16 +118,39 @@
     <div class="card">
       <h2 class="no-print">6. Hand these out</h2>
       <div class="msg warn no-print">
-        These tokens are shown once. Print or copy them now &mdash; they cannot be recovered
+        These are shown once. Copy or print them now &mdash; they cannot be recovered
         from the published file, and closing this tab loses them for good.
       </div>
+      <p class="hint no-print" style="margin-top:0">
+        Send each person their own link and they're signed in on one tap &mdash; nothing to
+        type. The code underneath is the same thing, for anyone who'd rather type it or
+        who's reading it out over the phone. Both are as private as a door key.
+      </p>
       <div class="actions no-print">
+        <button type="button" class="secondary" id="copy-links">Copy the links</button>
+        <button type="button" class="secondary" id="copy-tokens">Copy the codes</button>
         <button type="button" class="secondary" id="print">Print the slips</button>
-        <button type="button" class="secondary" id="copy-tokens">Copy as a list</button>
       </div>
       <div class="slips" id="slips"></div>
     </div>
   </section>
+
+  <!-- 7. Rebuild links for a draw that already happened -->
+  <div class="card no-print">
+    <h2>Already drawn? Turn codes into links</h2>
+    <p class="hint" style="margin-top:0">
+      Paste a list of codes &mdash; <code>Name: CODE</code> per line, or just the codes.
+      Nothing here is sent anywhere; the links are assembled in this tab.
+    </p>
+    <label for="relink-input">Codes</label>
+    <textarea id="relink-input" rows="5" placeholder="Ada: 9QM4C-KAK7S-1A0MK-SEXGB&#10;Grace: 5CDGM-AAJ0N-VJFZ5-BAAT3"></textarea>
+    <div class="actions">
+      <button type="button" id="relink">Build the links</button>
+      <button type="button" class="secondary" id="relink-copy">Copy</button>
+    </div>
+    <div class="msg" id="relink-status" role="status"></div>
+    <pre class="output" id="relink-output"></pre>
+  </div>
 
 </div>
 
