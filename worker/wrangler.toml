@@ -16,7 +16,8 @@ DATA_URL = "https://lukecamels.github.io/secret-santa/data/santa.json"
 ALLOWED_ORIGINS = "https://lukecamels.github.io"
 
 # Don't send more than one nudge per mailbox within this many minutes.
-NOTIFY_MIN_MINUTES = "360"
+# "0" means notify on every single update.
+NOTIFY_MIN_MINUTES = "0"
 
 # Include a 4-character mailbox reference in the notification. Leave as "false"
 # to keep every notification completely indistinguishable from every other.

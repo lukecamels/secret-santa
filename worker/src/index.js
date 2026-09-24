@@ -189,13 +189,17 @@ function json(body, status, cors) {
  * whose. Debounced per mailbox so a burst of edits is one nudge, not twenty.
  */
 async function notify(env, mailboxId) {
-  const quietMinutes = Number(env.NOTIFY_MIN_MINUTES || 360);
+  const quietMinutes = Number(env.NOTIFY_MIN_MINUTES ?? 360);
   const key = `notified:${mailboxId}`;
 
   try {
-    const last = Number((await env.SANTA_KV.get(key)) || 0);
-    if (Date.now() - last < quietMinutes * 60 * 1000) return;
-    await env.SANTA_KV.put(key, String(Date.now()));
+    // 0 means notify on every update, so skip the bookkeeping entirely rather
+    // than reading and rewriting a timestamp that can never suppress anything.
+    if (quietMinutes > 0) {
+      const last = Number((await env.SANTA_KV.get(key)) || 0);
+      if (Date.now() - last < quietMinutes * 60 * 1000) return;
+      await env.SANTA_KV.put(key, String(Date.now()));
+    }
 
     const ref = String(env.NOTIFY_INCLUDE_REF) === 'true' ? ` (ref ${mailboxId.slice(0, 4)})` : '';
     const text =
