@@ -198,9 +198,17 @@ When anyone saves a wishlist or sends a message, the Worker emails you:
 > know to log in and check.
 
 Deliberately vague — it names nobody and says nothing about what changed, so
-forwarding it to the whole family gives nothing away. It's rate-limited to one
-nudge per mailbox per six hours (`NOTIFY_MIN_MINUTES`) so a flurry of edits
-doesn't become a flurry of emails.
+forwarding it to the whole family gives nothing away.
+
+`NOTIFY_MIN_MINUTES` caps how often one can arrive, **across the whole event**
+rather than per person: `1440` is one a day, `360` one every six hours, `0` one
+for every single update. The limit is global on purpose — every email says
+exactly the same thing, so a per-person limit would just mean one identical
+message per participant, which is seven a day for a family of seven.
+
+The cap is best-effort. Cloudflare KV reads can be a little stale, so two people
+saving at the very same moment might occasionally squeeze out a second email. It
+will never be a flood.
 
 `NOTIFY_INCLUDE_REF = "true"` adds a four-character mailbox reference if you'd
 rather be able to tell separate conversations apart. It's opaque, but it does let

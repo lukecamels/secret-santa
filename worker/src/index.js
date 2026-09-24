@@ -190,7 +190,11 @@ function json(body, status, cors) {
  */
 async function notify(env, mailboxId) {
   const quietMinutes = Number(env.NOTIFY_MIN_MINUTES ?? 360);
-  const key = `notified:${mailboxId}`;
+
+  // One shared key rather than one per mailbox. Every notification says exactly
+  // the same thing, so a per-mailbox limit would just mean one identical email
+  // per person - seven a day here, not the one that was asked for.
+  const key = 'notify:last';
 
   try {
     // 0 means notify on every update, so skip the bookkeeping entirely rather

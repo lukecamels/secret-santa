@@ -15,9 +15,9 @@ DATA_URL = "https://lukecamels.github.io/secret-santa/data/santa.json"
 # Only these origins may call the API. Comma-separated.
 ALLOWED_ORIGINS = "https://lukecamels.github.io"
 
-# Don't send more than one nudge per mailbox within this many minutes.
-# "0" means notify on every single update.
-NOTIFY_MIN_MINUTES = "0"
+# At most one notification email in this many minutes, across the whole event.
+# 1440 = one a day. "0" means notify on every single update.
+NOTIFY_MIN_MINUTES = "1440"
 
 # Include a 4-character mailbox reference in the notification. Leave as "false"
 # to keep every notification completely indistinguishable from every other.
