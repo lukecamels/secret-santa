@@ -142,6 +142,7 @@
 
   global.SSCrypto = {
     PBKDF2_ITERATIONS: PBKDF2_ITERATIONS,
+    TOKEN_LENGTH: TOKEN_CHARS,
     b64uEncode: b64uEncode,
     b64uDecode: b64uDecode,
     randomBytes: randomBytes,

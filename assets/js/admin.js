@@ -333,19 +333,28 @@
         code = code.slice(sep + 1).trim();
       }
 
+      // Must be exactly a token's worth of characters. Anything else is a typo
+      // or a stray line, and turning it into a plausible-looking link would
+      // just mean sending somebody a dud.
       var normalised = SSCrypto.normalizeToken(code);
-      if (normalised.length < 8) { skipped++; return; }
+      if (normalised.length !== SSCrypto.TOKEN_LENGTH) { skipped++; return; }
 
       out.push((name ? name + ': ' : '') + signInLink(SSCrypto.formatToken(normalised)));
     });
 
     $('relink-output').textContent = out.join('\n');
+
+    var skipNote = skipped
+      ? ' ' + skipped + ' line' + (skipped === 1 ? '' : 's') + ' skipped — a code is ' +
+        SSCrypto.TOKEN_LENGTH + ' characters, so check for a typo or a missing character.'
+      : '';
+
     if (out.length === 0) {
-      setMsg($('relink-status'), 'No codes found. One per line, e.g. "Ada: 9QM4C-KAK7S-1A0MK-SEXGB".', 'error');
+      setMsg($('relink-status'),
+        'No usable codes found. One per line, e.g. "Ada: 9QM4C-KAK7S-1A0MK-SEXGB".' + skipNote, 'error');
     } else {
       setMsg($('relink-status'),
-        'Built ' + out.length + ' link' + (out.length === 1 ? '' : 's') +
-        (skipped ? ' (' + skipped + ' line' + (skipped === 1 ? '' : 's') + ' skipped - too short to be a code)' : '') + '.',
+        'Built ' + out.length + ' link' + (out.length === 1 ? '' : 's') + '.' + skipNote,
         skipped ? 'warn' : 'ok');
     }
   }
